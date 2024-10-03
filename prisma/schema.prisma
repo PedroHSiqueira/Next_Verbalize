@@ -14,33 +14,44 @@ datasource db {
 }
 
 model Idiomas {
-  id        String    @id @default(uuid()) @db.VarChar(36)
-  nome      String    @db.VarChar(60)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  usuario   Usuario[]
+  id        Int              @id @default(autoincrement())
+  nome      String           @db.VarChar(60)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  usuario   Idiomas_Usuarios[]
 
   @@map("idiomas")
 }
 
+model Idiomas_Usuarios {
+  id        String   @id @default(uuid()) @db.VarChar(36)
+  idioma    Idiomas  @relation(fields: [idiomaId], references: [id])
+  idiomaId  Int      @db.Int
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId String   @db.VarChar(36)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("idiomas_usuarios")
+}
+
 model Usuario {
-  id                String   @id @default(uuid()) @db.VarChar(36)
-  nome              String   @db.VarChar(60)
-  idade             Int?      @db.Int
-  nacionalidade     String?   @db.VarChar(60)
-  descricao         String?   @db.Text
-  foto              String?   @db.VarChar(255)
-  genero            Genero?   @default(NAO_INFORMADO)
-  linguaMaterna     String?   @db.VarChar(60)
-  idiomasInterresse Idiomas?  @relation(fields: [idiomasId], references: [id])
-  idiomasId         String?
-  tempoDeUso        Int?      @db.Int
-  mensagensTotais   Int?      @db.Int
-  sessoesTotais     Int?      @db.Int
-  email             String   @unique @db.VarChar(60)
-  senha             String   @db.VarChar(60)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  id                String           @id @default(uuid()) @db.VarChar(36)
+  nome              String           @db.VarChar(60)
+  idade             Int?             @db.Int
+  nacionalidade     String?          @db.VarChar(60)
+  descricao         String?          @db.Text
+  foto              String?          @db.VarChar(255)
+  genero            Genero?          @default(NAO_INFORMADO)
+  linguaMaterna     String?          @db.VarChar(60)
+  idiomasInterresse Idiomas_Usuarios[]
+  tempoDeUso        Int?             @db.Int
+  mensagensTotais   Int?             @db.Int
+  sessoesTotais     Int?             @db.Int
+  email             String           @unique @db.VarChar(60)
+  senha             String           @db.VarChar(60)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
 
   @@map("usuarios")
 }
