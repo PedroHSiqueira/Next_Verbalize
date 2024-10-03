@@ -17,23 +17,16 @@ router.get("/", async (req, res) => {
 function validaSenha(senha: string) {
   const mensa: string[] = [];
 
-  // .length: retorna o tamanho da string (da senha)
   if (senha.length < 8) {
     mensa.push("Erro... senha deve possuir, no mínimo, 8 caracteres");
   }
 
-  // contadores
   let pequenas = 0;
   let grandes = 0;
   let numeros = 0;
   let simbolos = 0;
 
-  // senha = "abc123"
-  // letra = "a"
-
-  // percorre as letras da variável senha
   for (const letra of senha) {
-    // expressão regular
     if (/[a-z]/.test(letra)) {
       pequenas++;
     } else if (/[A-Z]/.test(letra)) {
@@ -68,13 +61,9 @@ router.post("/", async (req, res) => {
     return;
   }
 
-  // 12 é o número de voltas (repetições) que o algoritmo faz
-  // para gerar o salt (sal/tempero)
   const salt = bcrypt.genSaltSync(12);
-  // gera o hash da senha acrescida do salt
   const hash = bcrypt.hashSync(senha, salt);
 
-  // para o campo senha, atribui o hash gerado
   try {
     const usuario = await prisma.usuario.create({
       data: { nome, email, senha: hash },
@@ -128,12 +117,9 @@ router.delete("/:id", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { email, senha } = req.body;
 
-  // em termos de segurança, o recomendado é exibir uma mensagem padrão
-  // a fim de evitar de dar "dicas" sobre o processo de login para hackers
   const mensaPadrao = "Login ou senha incorretos";
 
   if (!email || !senha) {
-    // res.status(400).json({ erro: "Informe e-mail e senha do usuário" })
     res.status(400).json({ erro: mensaPadrao });
     return;
   }
@@ -144,12 +130,10 @@ router.post("/login", async (req, res) => {
     });
 
     if (usuario == null) {
-      // res.status(400).json({ erro: "E-mail inválido" })
       res.status(400).json({ erro: mensaPadrao });
       return;
     }
 
-    // se o e-mail existe, faz-se a comparação dos hashs
     if (bcrypt.compareSync(senha, usuario.senha)) {
       res.status(200).json({
         id: usuario.id,
