@@ -1,6 +1,6 @@
 import express from 'express'
 import usuarioRoutes from './routes/usuarios'
-import idiomasRoutes from './routes/idiomas'
+import idiomasRoutes from './routes/idioma'
 import cors from 'cors'
 const app = express()
 const port = 3004
