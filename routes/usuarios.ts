@@ -139,9 +139,34 @@ router.post("/login", async (req, res) => {
         id: usuario.id,
         nome: usuario.nome,
         email: usuario.email,
+        foto: usuario.foto,
       });
     } else {
       res.status(400).json({ erro: mensaPadrao });
+    }
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const usuario = await prisma.usuario.findUnique({
+      where: { id },
+    });
+
+    if (usuario == null) {
+      res.status(400).json({ erro: "Não Cadastrado " });
+      return;
+    } else {
+      res.status(200).json({
+        id: usuario.id,
+        nome: usuario.nome,
+        email: usuario.email,
+        foto: usuario.foto,
+      });
     }
   } catch (error) {
     res.status(400).json(error);
