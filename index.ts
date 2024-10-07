@@ -3,7 +3,7 @@ import usuarioRoutes from './routes/usuarios'
 import idiomasRoutes from './routes/idioma'
 import cors from 'cors'
 const app = express()
-const port = 3004
+const port = process.env.PORT || 3004
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
