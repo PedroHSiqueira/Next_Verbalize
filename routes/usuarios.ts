@@ -166,6 +166,9 @@ router.get("/:id", async (req, res) => {
         nome: usuario.nome,
         email: usuario.email,
         foto: usuario.foto,
+        idade: usuario.idade,
+        genero: usuario.genero,
+        nacionalidade: usuario.nacionalidade,
       });
     }
   } catch (error) {
