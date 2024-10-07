@@ -169,6 +169,10 @@ router.get("/:id", async (req, res) => {
         idade: usuario.idade,
         genero: usuario.genero,
         nacionalidade: usuario.nacionalidade,
+        tempoDeUso: usuario.tempoDeUso,
+        mensagensTotais: usuario.mensagensTotais,
+        sessoesTotais: usuario.sessoesTotais,
+
       });
     }
   } catch (error) {

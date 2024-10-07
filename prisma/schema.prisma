@@ -38,16 +38,16 @@ model Idiomas_Usuarios {
 model Usuario {
   id                String           @id @default(uuid()) @db.VarChar(36)
   nome              String           @db.VarChar(60)
-  idade             Int?             @db.Int
-  nacionalidade     String?          @db.VarChar(60)
+  idade             Int?             @db.Int @default(0)
+  nacionalidade     String?          @db.VarChar(60) @default("Aguardando")
   descricao         String?          @db.Text
   foto              String           @db.VarChar(255) @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpxzMJ80PmPGQIrDCKHeRwyW7nWreGvtR3ng&s")
   genero            Genero?          @default(NAO_INFORMADO)
   linguaMaterna     String?          @db.VarChar(60)
   idiomasInterresse Idiomas_Usuarios[]
-  tempoDeUso        Int?             @db.Int
-  mensagensTotais   Int?             @db.Int
-  sessoesTotais     Int?             @db.Int
+  tempoDeUso        Int?             @db.Int @default(0)
+  mensagensTotais   Int?             @db.Int @default(0)
+  sessoesTotais     Int?             @db.Int @default(0)
   email             String           @unique @db.VarChar(60)
   senha             String           @db.VarChar(60)
   createdAt         DateTime         @default(now())
