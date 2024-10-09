@@ -55,11 +55,11 @@ router.post("/", async (req, res) => {
     return;
   }
 
-  const erros = validaSenha(senha);
-  if (erros.length > 0) {
-    res.status(400).json({ erro: erros.join("; ") });
-    return;
-  }
+  // const erros = validaSenha(senha);
+  // if (erros.length > 0) {
+  //   res.status(400).json({ erro: erros.join("; ") });
+  //   return;
+  // }
 
   const salt = bcrypt.genSaltSync(12);
   const hash = bcrypt.hashSync(senha, salt);
