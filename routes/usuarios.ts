@@ -76,26 +76,17 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { nome, email, senha } = req.body;
+  const { nome, idade, nacionalidade, descricao, genero, linguaMaterna } = req.body;
 
-  if (!nome || !email || !senha) {
-    res.status(400).json({ erro: "Informe nome, email e senha" });
+  if (!nome || !idade || !nacionalidade || !descricao || !genero || !linguaMaterna) {
+    res.status(400).json({ erro: "Informe os todos dados a serem alterados" });
     return;
   }
-
-  const erros = validaSenha(senha);
-  if (erros.length > 0) {
-    res.status(400).json({ erro: erros.join("; ") });
-    return;
-  }
-
-  const salt = bcrypt.genSaltSync(12);
-  const hash = bcrypt.hashSync(senha, salt);
 
   try {
     const usuario = await prisma.usuario.update({
       where: { id },
-      data: { nome, email, senha: hash },
+      data: { nome, idade, nacionalidade, descricao, genero, linguaMaterna },
     });
     res.status(200).json(usuario);
   } catch (error) {
@@ -169,10 +160,10 @@ router.get("/:id", async (req, res) => {
         idade: usuario.idade,
         genero: usuario.genero,
         nacionalidade: usuario.nacionalidade,
+        linguaMaterna: usuario.linguaMaterna,
         tempoDeUso: usuario.tempoDeUso,
         mensagensTotais: usuario.mensagensTotais,
         sessoesTotais: usuario.sessoesTotais,
-
       });
     }
   } catch (error) {
