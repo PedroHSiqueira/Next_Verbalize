@@ -156,6 +156,7 @@ router.get("/:id", async (req, res) => {
         id: usuario.id,
         nome: usuario.nome,
         email: usuario.email,
+        descricao: usuario.descricao,
         foto: usuario.foto,
         idade: usuario.idade,
         genero: usuario.genero,
