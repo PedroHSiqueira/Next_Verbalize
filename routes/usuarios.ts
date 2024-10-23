@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
     const usuarios = await prisma.usuario.findMany({
       include: {
         idiomasInterresse: true,
-      }
+      },
     });
     res.status(200).json(usuarios);
   } catch (error) {
@@ -80,9 +80,9 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { nome, idade, nacionalidade, descricao, genero, linguaMaternaId } = req.body;
+  const { idade, nacionalidade, descricao, genero, linguaMaternaId } = req.body;
 
-  if (!nome || !idade || !nacionalidade || !descricao || !genero || !linguaMaternaId) {
+  if (!idade || !nacionalidade || !descricao || !genero || !linguaMaternaId) {
     res.status(400).json({ erro: "Informe os todos dados a serem alterados" });
     return;
   }
@@ -90,7 +90,7 @@ router.put("/:id", async (req, res) => {
   try {
     const usuario = await prisma.usuario.update({
       where: { id },
-      data: { nome, idade, nacionalidade, descricao, genero, linguaMaternaId },
+      data: { idade, nacionalidade, descricao, genero, linguaMaternaId },
     });
     res.status(200).json(usuario);
   } catch (error) {
