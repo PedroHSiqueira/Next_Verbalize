@@ -162,7 +162,7 @@ router.get("/:id", async (req, res) => {
         email: usuario.email,
         descricao: usuario.descricao,
         foto: usuario.foto,
-        idade: usuario.nascimento,
+        nascimento: usuario.nascimento,
         genero: usuario.genero,
         nacionalidade: usuario.nacionalidade,
         linguaMaternaId: usuario.linguaMaternaId,
