@@ -39,7 +39,7 @@ model Idiomas_Usuarios {
 model Usuario {
   id                String             @id @default(uuid()) @db.VarChar(36)
   nome              String             @db.VarChar(60)
-  nascimento        DateTime           @db.Date @default(now())
+  nascimento        DateTime           @default(now()) @db.Date
   nacionalidade     String?            @default("Aguardando") @db.VarChar(60)
   descricao         String?            @db.Text
   foto              String             @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpxzMJ80PmPGQIrDCKHeRwyW7nWreGvtR3ng&s") @db.VarChar(255)
