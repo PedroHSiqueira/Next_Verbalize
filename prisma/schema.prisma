@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -20,13 +20,14 @@ model Idiomas {
   updatedAt            DateTime           @updatedAt
   usuario              Idiomas_Usuarios[]
   linguaMaternaUsuario Usuario[]
+
   @@map("idiomas")
 }
 
 model Idiomas_Usuarios {
   id        Int      @id @default(autoincrement())
   idioma    Idiomas  @relation(fields: [idiomaId], references: [id])
-  idiomaId  Int      @db.Int
+  idiomaId  Int
   usuario   Usuario  @relation(fields: [usuarioId], references: [id])
   usuarioId String   @db.VarChar(36)
   createdAt DateTime @default(now())
@@ -38,17 +39,17 @@ model Idiomas_Usuarios {
 model Usuario {
   id                String             @id @default(uuid()) @db.VarChar(36)
   nome              String             @db.VarChar(60)
-  idade             Int?               @default(0) @db.Int
+  idade             Int?               @default(0)
   nacionalidade     String?            @default("Aguardando") @db.VarChar(60)
   descricao         String?            @db.Text
   foto              String             @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpxzMJ80PmPGQIrDCKHeRwyW7nWreGvtR3ng&s") @db.VarChar(255)
   genero            Genero?            @default(NAO_INFORMADO)
   linguaMaterna     Idiomas?           @relation(fields: [linguaMaternaId], references: [id])
-  linguaMaternaId   Int?               @db.Int
+  linguaMaternaId   Int?
   idiomasInterresse Idiomas_Usuarios[]
-  tempoDeUso        Int?               @default(0) @db.Int
-  mensagensTotais   Int?               @default(0) @db.Int
-  sessoesTotais     Int?               @default(0) @db.Int
+  tempoDeUso        Int?               @default(0)
+  mensagensTotais   Int?               @default(0)
+  sessoesTotais     Int?               @default(0)
   email             String             @unique @db.VarChar(60)
   senha             String             @db.VarChar(60)
   createdAt         DateTime           @default(now())
