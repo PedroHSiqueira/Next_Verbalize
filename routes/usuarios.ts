@@ -198,7 +198,7 @@ async function emailRecuperacaoSenha(email: string, token: string) {
             <p>Seu código de recuperação é : ${token}</p>
             <h3>Atenção: Não compartilhe este código com ninguém</h3>
             </br>
-            <a href="https://verbalize-senac.vercel.app/alterar">Página de Recuperação de senha</a>
+            <a href="https://verbalize-senac.vercel.app/recuperacao/alterar">Página de Recuperação de senha</a>
             `,
     });
 
@@ -235,7 +235,7 @@ router.put("/esqueceu/:email", async (req, res) => {
   }
 })
 
-router.put("/alterar", async (req, res) => {
+router.put("/recuperacao/alterar", async (req, res) => {
   const { email, senha, recuperacao } = req.body;
 
   if (!email || !senha || !recuperacao) {
