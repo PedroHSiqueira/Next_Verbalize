@@ -239,7 +239,7 @@ router.put("/recuperacao/alterar", async (req, res) => {
   const { email, senha, recuperacao } = req.body;
 
   if (!email || !senha || !recuperacao) {
-    res.status(400).json({ erro: "Informe email, senha e token" });
+    res.status(400).json({ erro: "Informe email, senha e token de recuperação" });
     return;
   }
 
