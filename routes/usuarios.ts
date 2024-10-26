@@ -79,12 +79,12 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/mudainformacoes/:id", async (req, res) => {
   const { id } = req.params;
   const { nascimento, nacionalidade, descricao, genero, linguaMaternaId } = req.body;
 
   if (!nascimento || !nacionalidade || !descricao || !genero || !linguaMaternaId) {
-    res.status(400).json({ erro: "Informe os todos dados a serem alterados" });
+    res.status(400).json({ erro: "Informe todos dados a serem alterados" });
     return;
   }
 
