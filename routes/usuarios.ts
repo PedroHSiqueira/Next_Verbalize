@@ -145,7 +145,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/conta/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
