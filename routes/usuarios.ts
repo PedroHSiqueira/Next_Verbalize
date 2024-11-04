@@ -136,6 +136,7 @@ router.post("/login", async (req, res) => {
         nome: usuario.nome,
         email: usuario.email,
         foto: usuario.foto,
+        descricao: usuario.descricao,
       });
     } else {
       res.status(400).json({ erro: mensaPadrao });
