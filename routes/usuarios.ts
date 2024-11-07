@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Genero, PrismaClient } from "@prisma/client";
 import { Router } from "express";
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
@@ -44,9 +44,7 @@ function validaSenha(senha: string) {
   }
 
   if (pequenas == 0 || grandes == 0 || numeros == 0 || simbolos == 0) {
-    mensa.push(
-      "Erro... senha deve possuir letras minúsculas, maiúsculas, números e símbolos"
-    );
+    mensa.push("Erro... senha deve possuir letras minúsculas, maiúsculas, números e símbolos");
   }
 
   return mensa;
@@ -81,18 +79,31 @@ router.post("/", async (req, res) => {
 
 router.put("/mudainformacoes/:id", async (req, res) => {
   const { id } = req.params;
-  const { nascimento, nacionalidade, descricao, genero, linguaMaternaId } = req.body;
+  const { nascimento, nacionalidade, descricao, genero, linguaMaternaId, linguasInteresse }: { nascimento: string; nacionalidade: string; descricao: string; genero: string; linguaMaternaId: number; linguasInteresse: { id: number; value: string; label: string }[] } = req.body;
 
-  if (!nascimento || !nacionalidade || !descricao || !genero || !linguaMaternaId) {
+  if (!nascimento || !nacionalidade || !descricao || !genero || !linguaMaternaId || !linguasInteresse) {
     res.status(400).json({ erro: "Informe todos dados a serem alterados" });
     return;
   }
-
   try {
     const usuario = await prisma.usuario.update({
       where: { id },
-      data: { nascimento , nacionalidade, descricao, genero, linguaMaternaId },
+      data: { nascimento, nacionalidade, descricao, genero: genero as Genero, linguaMaternaId },
     });
+    await prisma.idiomas_Usuarios.deleteMany({
+      where: {
+      usuarioId: id,
+      },
+    });
+
+    for (const idioma of linguasInteresse) {
+      await prisma.idiomas_Usuarios.create({
+        data: {
+          idiomaId: Number(idioma.id),
+          usuarioId: id,
+        },
+      });
+    }
     res.status(200).json(usuario);
   } catch (error) {
     res.status(400).json(error);
@@ -191,7 +202,7 @@ async function emailRecuperacaoSenha(email: string, token: string) {
 
   try {
     const info = await transporter.sendMail({
-      from: 'pedrohenriquedoamaralsiqueira@gmail.com',
+      from: "pedrohenriquedoamaralsiqueira@gmail.com",
       to: email,
       subject: "Formulário",
       text: "Recuperação de Senha",
@@ -234,7 +245,7 @@ router.put("/esqueceu/:email", async (req, res) => {
   } catch (error) {
     res.status(400).json(error);
   }
-})
+});
 
 router.put("/recuperacao/alterar", async (req, res) => {
   const { email, senha, recuperacao } = req.body;
@@ -276,6 +287,6 @@ router.put("/recuperacao/alterar", async (req, res) => {
   } catch (error) {
     res.status(400).json(error);
   }
-})
+});
 
 export default router;
