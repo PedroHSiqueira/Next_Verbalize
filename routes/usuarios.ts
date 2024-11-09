@@ -289,4 +289,26 @@ router.put("/recuperacao/alterar", async (req, res) => {
   }
 });
 
+router.get("/detalhes/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const usuario = await prisma.usuario.findUnique({
+      where: { id },
+      include: {
+        idiomasInterresse: true,
+      },
+    });
+
+    if (usuario == null) {
+      res.status(400).json({ erro: "Não Cadastrado " });
+      return;
+    } else {
+      res.status(200).json(usuario);
+    }
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
 export default router;
