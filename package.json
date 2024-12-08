@@ -25,6 +25,8 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "nodemailer": "^6.9.15",
-    "prisma": "^5.14.0"
+    "prisma": "^5.14.0",
+    "pusher": "^5.2.0",
+    "pusher-js": "^8.4.0-rc2"
   }
 }

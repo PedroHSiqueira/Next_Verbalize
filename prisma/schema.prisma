@@ -52,11 +52,31 @@ model Usuario {
   sessoesTotais     Int?               @default(0)
   email             String             @unique @db.VarChar(60)
   senha             String             @db.VarChar(60)
+  conversas         Conversa[]         
   recuperacao       String?            @db.VarChar(6)
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
 
   @@map("usuarios")
+}
+
+model Conversa {
+  id        Int        @id @default(autoincrement())
+  usuarios   Usuario[]
+  mensagens Mensagem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  @@map("conversas")
+}
+
+model Mensagem {
+  id        String   @id @default(uuid()) @db.VarChar(36)
+  Conversa Conversa[]
+  usuarioId String   @db.VarChar(36)
+  texto     String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("mensagens")
 }
 
 model Administrador {
