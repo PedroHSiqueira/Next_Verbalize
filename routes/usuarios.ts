@@ -111,7 +111,7 @@ router.put("/mudainformacoes/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/excluir/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
