@@ -2,6 +2,7 @@ import { Genero, PrismaClient } from "@prisma/client";
 import { Router } from "express";
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
+import { create } from "domain";
 
 const prisma = new PrismaClient();
 const router = Router();
@@ -182,6 +183,8 @@ router.get("/conta/:id", async (req, res) => {
         tempoDeUso: usuario.tempoDeUso,
         mensagensTotais: usuario.mensagensTotais,
         sessoesTotais: usuario.sessoesTotais,
+        createdAt: usuario.createdAt,
+        updatedAt: usuario.updatedAt,
       });
     }
   } catch (error) {
