@@ -115,6 +115,11 @@ router.delete("/excluir/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
+    await prisma.idiomas_Usuarios.deleteMany({
+      where: {
+        usuarioId: id,
+      },
+    });
     await prisma.usuario.delete({ where: { id } });
     res.status(204).end();
   } catch (error) {
